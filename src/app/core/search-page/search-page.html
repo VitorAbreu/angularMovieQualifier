@@ -1,0 +1,33 @@
+<form #form="ngForm" (ngSubmit)="searchMovie(form)">
+    <label for="movie">
+        Search for a movie:
+        <input
+            nz-input placeholder="Search for your favorite movie"
+            name="movie"
+            type="text"
+            inputMovieDirective
+            #movie="ngModel"
+            [ngModel]="movie.value"
+            [nzStatus]="movie.errors?.['inputMovie'] ? 'error' : ''"
+        />
+        @if (movie.errors?.['inputMovie']) {
+            <p class="error">The input should have more than 3 characters and only alphanumeric</p>
+        }
+    </label>
+</form>
+<div class="container" nz-row [nzGutter]="['16', '16']" nzJustify="center" nzGap="small">
+    @for (item of listMovies; track item.id) {
+        <div nz-col nzXs="24" nzSm="24" nzMd="6" nzFlex>
+            <app-movie-card
+                [title]="item.title"
+                [rating]="item.vote_average"
+                [poster_path]="item.poster_path"
+                (click)="redirectToMovieDetails(item.id)"
+            />
+        </div>
+    }
+</div>
+<div class="pagination" nz-flex nzJustify="center">
+    <nz-pagination (nzPageIndexChange)="searchMovie(form, $event)" [nzPageIndex]="pageIndex" [nzPageSize]="20" [nzTotal]="totalOfResults"></nz-pagination>
+</div>
+<router-outlet />

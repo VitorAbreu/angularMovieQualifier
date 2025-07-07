@@ -1,0 +1,65 @@
+@if(movieDetails) {
+    @let poster = movieDetails.poster_path;
+    @let title = movieDetails.title;
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="title" (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter">
+        <ng-container *nzModalContent>
+            <nz-layout>
+                <nz-sider>
+                    @if (poster !== null) {
+                        <img
+                            class="banner-details"
+                            [alt]="`banner from ${title} film`" [src]="`https://image.tmdb.org/t/p/w500${poster}`"
+                        />
+                    } @else {
+                        <img
+                            class="banner-details"
+                            [alt]="`No available banner from ${title} film`" src="/assets/No_image_available.png"
+                        />
+                    }
+                </nz-sider>
+                <nz-layout>
+                    <nz-content>
+                        <p>Overview: {{movieDetails.overview}}</p>
+                        @if (movieDetails.budget) {
+                            <p>Budget: {{movieDetails.budget | currency: 'USD'}}</p>
+                        } @else {
+                            <p>Budget: No available Budget</p>
+                        }
+                        <p>Release date: {{movieDetails.release_date | date: 'shortDate'}}</p>
+                        <p>Vote average: {{movieDetails.vote_average}}</p>
+                        <ul>Spoken Languages:
+                            @for (languages of movieDetails.spoken_languages; track $index) {
+                                <li>{{languages.english_name}}</li>
+                            } @empty {
+                                <li>There's no available languages</li>
+                            }
+                        </ul>
+                    </nz-content>
+                </nz-layout>
+            </nz-layout>
+        </ng-container>
+        <ng-template #modalFooter>
+            @if (!submitted) {
+                <form [formGroup]="rateForm" (ngSubmit)="sendRating()">
+                    <label for="movie">
+                        Rate the movie:
+                        <input
+                            nz-input placeholder="e.g: 9"
+                            name="rate"
+                            type="number"
+                            formControlName="rateValue"
+                            [nzStatus]="!rateForm.valid && rateForm.touched ? 'error' : ''"
+                        />
+                        @if (!rateForm.valid && rateForm.touched) {
+                            <p class="error">The input should be a value between 0 and 10</p>
+                        }
+                    </label>
+                </form>
+                <button nz-button nzType="default" (click)="handleCancel()">Close modal</button>
+                <button nz-button nzType="primary" [disabled]="!rateForm.valid" (click)="sendRating()" [nzLoading]="isConfirmLoading">Send Rating</button>
+            } @else {
+                <p>Submitted successfully</p>
+            }
+        </ng-template>
+    </nz-modal>
+}

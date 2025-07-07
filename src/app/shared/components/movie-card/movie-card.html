@@ -1,0 +1,11 @@
+<nz-card nzHoverable [nzCover]="coverTemplate">
+    <nz-card-meta [nzTitle]="title()" [nzDescription]="rating().toString() + ' Rating'"></nz-card-meta>
+</nz-card>
+<ng-template #coverTemplate>
+    
+    @if (poster_path() !== null) {
+        <img [alt]="`banner from ${title()} film`" [src]="`https://image.tmdb.org/t/p/w500${poster_path()}`" />
+    } @else {
+        <img [alt]="`No available banner from ${title()} film`" src="/assets/No_image_available.png" />
+    }
+</ng-template>

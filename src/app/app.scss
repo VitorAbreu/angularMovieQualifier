@@ -1,0 +1,17 @@
+:host {
+    height: 100dvh;
+    display: flex;
+}
+
+nz-header,
+nz-footer {
+    text-align: center;
+    background: #7dbcea;
+    &, h1 {
+        color: #fff;
+    }
+}
+
+nz-content {
+    padding: 24px;
+}
