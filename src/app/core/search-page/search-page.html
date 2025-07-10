@@ -1,7 +1,9 @@
 <form #form="ngForm" (ngSubmit)="searchMovie(form)">
-    <label for="movie">
+    <label for="movieInput">
         Search for a movie:
-        <input
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input
+            id="movieInput"
             nz-input placeholder="Search for your favorite movie"
             name="movie"
             type="text"
@@ -10,10 +12,15 @@
             [ngModel]="movie.value"
             [nzStatus]="movie.errors?.['inputMovie'] ? 'error' : ''"
         />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+            <button nz-button type="submit" nzType="primary" nzSearch><nz-icon nzType="search" /></button>
+        </ng-template>
         @if (movie.errors?.['inputMovie']) {
             <p class="error">The input should have more than 3 characters and only alphanumeric</p>
         }
     </label>
+    
 </form>
 <div class="container" nz-row [nzGutter]="['16', '16']" nzJustify="center" nzGap="small">
     @for (item of listMovies; track item.id) {
@@ -22,6 +29,8 @@
                 [title]="item.title"
                 [rating]="item.vote_average"
                 [poster_path]="item.poster_path"
+                [id]="item.id"
+                icon="heart"
                 (click)="redirectToMovieDetails(item.id)"
             />
         </div>

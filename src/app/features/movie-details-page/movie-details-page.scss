@@ -4,9 +4,10 @@
 
 nz-content {
     padding: 16px;
-    .ant-layout-sider {
-        background: none;
-    }
+}
+
+.ant-layout-sider {
+    background: none !important;
 }
 
 form {

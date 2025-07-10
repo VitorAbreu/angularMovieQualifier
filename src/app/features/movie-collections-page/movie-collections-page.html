@@ -1,1 +1,27 @@
-<p>movie-collections-page works!</p>
+<h2>Your collections:</h2>
+<ul nz-list nzBordered nzSize="large">
+    @for (item of collectionStorage.getListItems(); track item) {
+    <li nz-list-item >
+        {{ item.name }}
+        <ul nz-list-item-actions>
+            <nz-list-item-action>
+                <button nz-button nzType="primary" [routerLink]="['/show', item.id]">Check</button>
+            </nz-list-item-action>
+            <!-- <nz-list-item-action>
+                <button nz-button nzType="default">Edit</button>
+            </nz-list-item-action> -->
+            <nz-list-item-action>
+                <button nz-button nzType="primary" nzDanger (click)="deleteSingleCollection(item.id)">Delete</button>
+            </nz-list-item-action>
+        </ul>
+    </li>
+    } @empty {
+        <li class="empty">You don't have any collections yet, try to create one</li>
+    }
+</ul>
+<div class="create" nz-flex nzJustify="center">
+    <button nz-button nzType="primary" [routerLink]="['/create']">Create new collection</button>
+    @if (collectionStorage.getListItems().length) {
+        <button id="delete" nz-button nzType="primary" nzDanger (click)="deleteAllCollections()">Delete all collections</button>
+    }
+</div>

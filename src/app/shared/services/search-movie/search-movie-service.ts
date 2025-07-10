@@ -41,7 +41,6 @@ export class SearchMovieService {
   }
 
   addRating(movie_id: number, rating: number) {
-    console.log(this.#guestSession, 'session')
     return this.#http.post(
       `${this.#url}/movie/${movie_id}/rating?api_key=${this.#apiKey}&guest_session_id=${this.#guestSession?.guest_session_id}`, 
       {

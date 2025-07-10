@@ -1,0 +1,24 @@
+@if(movieDetails) {
+<!-- @let poster = movieDetails.poster_path; -->
+@let title = movieDetails.title;
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Add ' + title + ' to which collection?'" (nzOnCancel)="handleCancel()"
+    [nzFooter]="modalFooter">
+    <ng-container *nzModalContent>
+        @if (!submitted) {
+            <ul nz-list nzBordered nzSize="large">
+                @for (item of collectionStorage.getListItems(); track item) {
+                <li nz-list-item (click)="saveOnCollection(movieDetails, item.id)">
+                    {{ item.name }}
+                </li>
+                } @empty {
+                <li>You don't have any collections yet, try to create one</li>
+                }
+            </ul>
+        } @else {
+            <p>{{title}} was added to selected collection</p>
+        }
+    </ng-container>
+    <ng-template #modalFooter>
+    </ng-template>
+</nz-modal>
+}

@@ -26,7 +26,13 @@
                             <p>Budget: No available Budget</p>
                         }
                         <p>Release date: {{movieDetails.release_date | date: 'shortDate'}}</p>
+                        @if (movieDetails.revenue) {
+                            <p>Revenue: {{movieDetails.revenue | currency: 'USD'}}</p>
+                        } @else {
+                            <p>Revenue: No available Revenue</p>
+                        }
                         <p>Vote average: {{movieDetails.vote_average}}</p>
+                        <p>Vote count: {{movieDetails.vote_count}}</p>
                         <ul>Spoken Languages:
                             @for (languages of movieDetails.spoken_languages; track $index) {
                                 <li>{{languages.english_name}}</li>
@@ -41,9 +47,10 @@
         <ng-template #modalFooter>
             @if (!submitted) {
                 <form [formGroup]="rateForm" (ngSubmit)="sendRating()">
-                    <label for="movie">
+                    <label for="rateInput">
                         Rate the movie:
                         <input
+                            id="rateInput"
                             nz-input placeholder="e.g: 9"
                             name="rate"
                             type="number"

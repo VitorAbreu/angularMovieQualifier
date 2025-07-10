@@ -17,7 +17,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 })
 export class MovieDetailsPage implements OnInit {
   #activatedRoute = inject(ActivatedRoute);
-  #route = inject(Router);
+  #router = inject(Router);
   #movieService = inject(SearchMovieService);
   isVisible = true;
   movieDetails!: iMovieDetails
@@ -30,28 +30,25 @@ export class MovieDetailsPage implements OnInit {
   submitted: boolean = false;
 
   ngOnInit(): void {
-    this.movie_id = Number(this.#activatedRoute.snapshot.paramMap.get('id'))
+    this.movie_id = Number(this.#activatedRoute.snapshot.paramMap.get('id'));
+
     this.#movieService.getMovieDetails(this.movie_id).subscribe({
       next: (data: iMovieDetails) => {
-        console.log(data, 'movie')
         this.movieDetails = data;
       }
     })
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isVisible = false;
-    this.#route.navigate(['']);
+    this.#router.navigate(['../../'], { relativeTo: this.#activatedRoute });
   }
 
   sendRating() {
     if(this.rateForm.valid) {
       this.isConfirmLoading = true;
-      console.log(this.rateForm, 'value')
       this.#movieService.addRating(this.movie_id, Number(this.rateForm.value.rateValue)).subscribe({
-        next: (data: any) => {
-          console.log(data, 'rating');
+        next: () => {
           this.isConfirmLoading = false;
           this.submitted = true;
         }

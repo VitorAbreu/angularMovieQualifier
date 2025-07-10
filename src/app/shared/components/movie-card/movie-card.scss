@@ -3,4 +3,16 @@
         height: 270px;
         object-fit: cover;
     }
+
+    nz-icon {
+        float: right;
+    }
+
+}
+@media (width <= 426px) {
+    ::ng-deep {
+        div.ant-card-meta-title {
+            white-space: normal !important;
+        }
+    }
 }

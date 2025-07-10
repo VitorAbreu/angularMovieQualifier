@@ -1,5 +1,6 @@
-<nz-card nzHoverable [nzCover]="coverTemplate">
+<nz-card nzHoverable [nzCover]="coverTemplate" >
     <nz-card-meta [nzTitle]="title()" [nzDescription]="rating().toString() + ' Rating'"></nz-card-meta>
+    <nz-icon [nzType]="icon()" (click)="openCollectionModal($event)"  nzTheme="outline" />
 </nz-card>
 <ng-template #coverTemplate>
     

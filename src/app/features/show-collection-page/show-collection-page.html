@@ -1,0 +1,17 @@
+<div nz-flex nzJustify="center">
+    <div>
+        <h1>{{ listMovies.name }}</h1>
+        <p>{{ listMovies.description }}</p>
+    </div>
+</div>
+<div class="container" nz-row [nzGutter]="['16', '16']" nzJustify="center" nzGap="small">
+    @for (item of listMovies.movie_collection; track item.id) {
+    <div nz-col nzXs="24" nzSm="24" nzMd="6" nzFlex>
+        <app-movie-card [title]="item.title" [rating]="item.vote_average" [poster_path]="item.poster_path" [id]="item.id" icon="delete"
+            (click)="redirectToMovieDetails(item.id)" (deleteEmitter)="deleteMovieFromCollection($event)"/>
+    </div>
+    } @empty {
+        <p>You don't have any movie yet, try to add one in Search Page</p>
+    }
+</div>
+<router-outlet />

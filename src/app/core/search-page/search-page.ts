@@ -6,10 +6,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { InputMovieDirective } from '../../shared/directives/inputMovie/input-movie-directive';
 import { SearchMovieService } from '../../shared/services/search-movie/search-movie-service';
-import { iApiResult, iMovieResult, iSession } from '../../shared/interfaces/movies-interfaces';
+import { iApiResult, iMovieResult } from '../../shared/interfaces/movies-interfaces';
 import { map, tap } from 'rxjs';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { MovieCard } from '../../shared/components/movie-card/movie-card';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-search-page',
@@ -21,7 +22,8 @@ import { MovieCard } from '../../shared/components/movie-card/movie-card';
     NzPaginationModule,
     NzFlexModule,
     NzGridModule,
-    MovieCard
+    MovieCard,
+    NzIconModule,
   ],
   templateUrl: './search-page.html',
   styleUrl: './search-page.scss'
@@ -37,11 +39,7 @@ export class SearchPage implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
-    this.#movieService.createGuestSession().subscribe({
-      next: (data: iSession) => {
-        console.log(data, 'session')
-      }
-    })
+    this.#movieService.createGuestSession().subscribe();
   }
 
   searchMovie(form: NgForm, page: number = 1) {
@@ -51,13 +49,11 @@ export class SearchPage implements OnInit {
       if(value) {
         this.#movieService.searchMovie(value, page).pipe(
           tap((data: iApiResult) => {
-            console.log(data)
             this.totalOfResults = data.total_results > this.limitOfData ? this.limitOfData : data.total_results;
           }),
           map((data: iApiResult) => data.results)
         ).subscribe({
           next: data => {
-            console.log(data, 'success list')
             this.listMovies = data;
           }
         })
@@ -70,14 +66,12 @@ export class SearchPage implements OnInit {
   getMovies(page: number = 1) {
     this.#movieService.getMovies(page).pipe(
       tap((data: iApiResult) => {
-        console.log(data)
         this.totalOfResults = data.total_results > this.limitOfData ? this.limitOfData : data.total_results;
       }),
       map((data: iApiResult) => data.results)
     ).subscribe(
       {
         next: data => {
-          console.log(data, 'success init')
           this.listMovies = data;
         }
       }

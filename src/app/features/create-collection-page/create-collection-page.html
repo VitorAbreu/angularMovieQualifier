@@ -1,0 +1,31 @@
+<h2>Create a collection:</h2>
+@if (!created) {
+<form [formGroup]="collectionForm" (ngSubmit)="createCollection()">
+    <label for="collection_name">
+        @let name_touched = collectionForm.controls.collection_name.touched;
+        @let name_valid = collectionForm.controls.collection_name.valid;
+        Collection name*:
+        <input nz-input placeholder="Action movies" name="collection_name" type="text" formControlName="collection_name"
+            [nzStatus]="!name_valid && name_touched ? 'error' : ''" />
+        @if (!name_valid && name_touched) {
+        <p class="error">The input should not be empty</p>
+        }
+    </label>
+    <label for="collection_description">
+        @let description_touched = collectionForm.controls.collection_description.touched;
+        @let description_valid = collectionForm.controls.collection_name.valid;
+        Collection description*:
+        <input nz-input placeholder="the best action movies of all time" name="collection_description" type="text"
+            formControlName="collection_description"
+            [nzStatus]="!description_valid && description_touched ? 'error' : ''" />
+        @if (!description_valid && description_touched) {
+        <p class="error">The input should not be empty</p>
+        }
+    </label>
+    <button nz-button nzType="primary" [disabled]="!collectionForm.valid" type="submit">
+        Create collection
+    </button>
+</form>
+} @else {
+    <p>Collection Created</p>
+}
