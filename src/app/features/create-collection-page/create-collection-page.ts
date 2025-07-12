@@ -5,10 +5,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { LocalStorageService } from '../../shared/services/local-storage/local-storage-service';
 import { iCollection } from '../../shared/interfaces/collections-interfaces';
 import { Router, RouterModule } from '@angular/router';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
   selector: 'app-create-collection-page',
-  imports: [ReactiveFormsModule, NzInputModule, NzButtonModule, RouterModule],
+  imports: [ReactiveFormsModule, NzInputModule, NzButtonModule, RouterModule, NzFlexModule],
   templateUrl: './create-collection-page.html',
   styleUrl: './create-collection-page.scss'
 })

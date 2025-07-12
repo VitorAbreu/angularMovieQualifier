@@ -22,9 +22,11 @@
         <p class="error">The input should not be empty</p>
         }
     </label>
-    <button nz-button nzType="primary" [disabled]="!collectionForm.valid" type="submit">
-        Create collection
-    </button>
+    <div nz-flex nzJustify="center">
+        <button nz-button nzType="primary" [disabled]="!collectionForm.valid" type="submit">
+            Create collection
+        </button>
+    </div>
 </form>
 } @else {
     <p>Collection Created</p>
