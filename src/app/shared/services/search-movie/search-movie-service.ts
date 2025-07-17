@@ -9,7 +9,7 @@ import { Observable, of, tap } from 'rxjs';
 export class SearchMovieService {
 
   #http = inject(HttpClient);
-  #apiKey = '85204a8cc33baf447559fb6d51b18313';
+  #apiKey = '908cb6703ecdfb1b42b6ea66dccd6fd6';
   #url = 'https://api.themoviedb.org/3';
   #guestSession: iSession | undefined;
 
